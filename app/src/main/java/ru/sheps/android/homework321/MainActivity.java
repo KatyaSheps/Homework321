@@ -9,22 +9,22 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView resultField; // текстовое поле для вывода результата
-    EditText numberField;   // поле для ввода числа
-    TextView operationField;    // текстовое поле для вывода знака операции
-    Double operand = null;  // операнд операции
-    String lastOperation = "="; // последняя операция
+    TextView resultField;
+    EditText numberField;
+    TextView operationField;
+    Double operand = null;
+    String lastOperation = "=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // получаем все поля по id из activity_main.xml
+
         resultField =(TextView) findViewById(R.id.resultField);
         numberField = (EditText) findViewById(R.id.numberField);
         operationField = (TextView) findViewById(R.id.operationField);
     }
-    // сохранение состояния
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString("OPERATION", lastOperation);
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             outState.putDouble("OPERAND", operand);
         super.onSaveInstanceState(outState);
     }
-    // получение ранее сохраненного состояния
+
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         resultField.setText(operand.toString());
         operationField.setText(lastOperation);
     }
-    // обработка нажатия на числовую кнопку
+
     public void onNumberClick(View view){
 
         Button button = (Button)view;
@@ -51,13 +51,12 @@ public class MainActivity extends AppCompatActivity {
             operand = null;
         }
     }
-    // обработка нажатия на кнопку операции
     public void onOperationClick(View view){
 
         Button button = (Button)view;
         String op = button.getText().toString();
         String number = numberField.getText().toString();
-        // если введенно что-нибудь
+
         if(number.length()>0){
             number = number.replace(',', '.');
             try{
@@ -72,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void performOperation(Double number, String operation){
 
-        // если операнд ранее не был установлен (при вводе самой первой операции)
         if(operand ==null){
             operand = number;
         }
